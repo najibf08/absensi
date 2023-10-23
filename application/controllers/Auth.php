@@ -1,16 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth extends CI_Controller{
- function __construct()
+class Auth extends CI_Controller
 {
-    parent::__construct();
-    $this->load->library('form_validation');
-    $this->load->model('user_model'); // Juga pastikan model User_model dimuat jika digunakan.
-    $this->load->model('m_model'); // Juga pastikan model User_model dimuat jika digunakan.
- 
- 
-}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('User_model');
+        $this->load->model('absensi_model');
+        $this->load->model('m_model');
+        $this->load->library('form_validation');
+        $this->load->library('upload');
+    }
 
     public function index()
     {
@@ -27,14 +28,13 @@ class Auth extends CI_Controller{
         $this->load->view('auth/register_admin');
     }
 
-    public function aksi_register_karyawan()
+    public function aksi_register()
     {
-        // Validasi input
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules(
             'email',
             'Email',
-            'required|valid_email|is_unique[user.email]'
+            'required|valid_email|is_unique[User.email]'
         );
         $this->form_validation->set_rules(
             'nama_depan',
@@ -49,14 +49,14 @@ class Auth extends CI_Controller{
         $this->form_validation->set_rules(
             'password',
             'Password',
-            'required|min_length[6]'
+            'required|min_length[8]'
         );
 
         if ($this->form_validation->run() === false) {
-            // Jika validasi gagal, tampilkan kembali halaman registrasi
+            // Tampilkan SweetAlert jika validasi panjang kata sandi gagal
+            $this->session->set_flashdata('password_length_error', true);
             $this->load->view('auth/register');
         } else {
-            // Jika validasi sukses, ambil data dari form
             $data = [
                 'username' => $this->input->post('username'),
                 'email' => $this->input->post('email'),
@@ -66,54 +66,72 @@ class Auth extends CI_Controller{
                     $this->input->post('password'),
                     PASSWORD_DEFAULT
                 ),
-                'role' => 'karyawan', // Default role adalah karyawan
+                'role' => 'karyawan',
             ];
 
-            // Cek apakah registrasi ini adalah admin
             if ($this->input->post('admin_code') == 'admin_secret_code') {
-                $data['role'] = 'admin'; // Jika kode rahasia admin cocok, set role sebagai admin
+                $data['role'] = 'admin';
             }
 
-            // Simpan data ke dalam database
-            $this->user_model->registeruser($data);
+            $data['foto'] = 'User.png';
 
-            // Redirect pengguna ke halaman login atau halaman lain yang sesuai
+            $this->User_model->registerUser($data);
+
+            $this->session->set_flashdata('success_register', true);
+
             redirect('auth');
         }
     }
-    
+
     public function aksi_login()
     {
-        $email = $this->input->post('email', true);
-        $password = $this->input->post('password', true);
-        $data = ['email' => $email,];
-        $query = $this->m_model->getwhere('user', $data);
-        $result = $query->row_array();
+        $this->form_validation->set_rules(
+            'email',
+            'Email',
+            'required|valid_email'
+        );
+        $this->form_validation->set_rules('password', 'Password', 'required');
 
-        if (!empty($result) && md5($password) === $result['password']) {
-            $data = [
-                'logged_in' => TRUE,
-                'email' => $result['email'],
-                'username' => $result['username'],
-                'role' => $result['role'],
-                'id' => $result['id'],
-            ];
-            $this->session->set_userdata($data);
-
-            if ($this->session->userdata('role') == 'admin') {
-                redirect(base_url() . "admin");
-            }elseif ($this->session->userdata('role') == 'karyawan') {  
-                redirect(base_url()."employee");
-            }
+        if ($this->form_validation->run() === false) {
+            $this->load->view('employee/dashboard');
         } else {
-            redirect(base_url() . "employee");
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+
+            $user = $this->User_model->getUserByEmail($email);
+
+            if (!$user) {
+                // Menampilkan SweetAlert jika email tidak ditemukan
+                $this->session->set_flashdata(
+                    'login_error',
+                    'Email Tidak Ditemukan.'
+                );
+                $this->load->view('auth/login', $data);
+            } else {
+                if (password_verify($password, $user->password)) {
+                    $this->session->set_userdata('id', $user->id);
+
+                    if ($user->role == 'admin') {
+                        redirect('admin/dashboard');
+                    } elseif ($user->role == 'karyawan') {
+                        redirect('employee/dashboard');
+                    }
+                } else {
+                    // Menampilkan SweetAlert jika password salah
+                    $this->session->set_flashdata(
+                        'login_error',
+                        'Password Salah'
+                    );
+                    $this->load->view('auth/login', $data);
+                }
+            }
         }
     }
 
     function logout()
     {
         $this->session->sess_destroy();
-        redirect(base_url('auth/index'));
-    } 
+        redirect(base_url('auth'));
+    }
 }
 ?>

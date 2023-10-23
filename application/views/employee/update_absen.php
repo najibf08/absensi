@@ -5,36 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi</title>
-    <link rel="stylesheet" type="text/css" href="<?php ('assets/css/responsive.css'); ?>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
+<style>
+.kegiatan {
+    margin-left: 20%;
+    margin-right: 10px;
+    margin-top: 100px;
+}
+</style>
 
 <body>
-    <?php $this->load->view('components/sidebar_karyawan'); ?>
-    <div class="main m-4">
-        <div class="container w-75">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Absensi</h5>
-                </div>
-                <div class="card-body">
-                    <?php foreach($absensi as $absen): ?>
-                    <form class="row" action="<?php ('karyawan/aksi_update_absen'); ?>"
-                        enctype="multipart/form-data" method="post">
-                        <input type="hidden" name="id" value="<?php echo $absen->id ?>">
-                        <div class="mb-3 col-12">
-                            <label for="Kegiatan" class="form-label">Kegiatan</label>
-                            <textarea class="form-control" aria-label="With textarea" name="kegiatan"
-                                value="<?php echo $absen->kegiatan ?>"></textarea>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <a class="btn btn-danger" href="javascript:history.go(-1)">Kembali</a>
-                            <button type="submit" class="btn btn-success" name="submit">Edit</button>
-                        </div>
-                    </form>
-                    <?php endforeach ?>
-                </div>
-            </div>
-        </div>
+    <?php $this->load->view('employee/index'); ?>
+    <div class="kegiatan mb-3">
+        <?php foreach ($absensi as $absen): ?>
+        <form method="post" action="<?= base_url(
+            'employee/aksi_update_absen'
+        ) ?>" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $absen->id; ?>">
+            <h3>Ubah</h3>
+            <br>
+            <!-- <?php echo $absen->id; ?> -->
+            <label for="Kegiatan" class="form-label">Kegiatan :</label>
+            <textarea class="form-control" aria-label="With textarea" name="kegiatan"></textarea>
+            <button type="submit" class="btn btn-success mt-4">Ubah</button>
+        </form>
+        <?php endforeach; ?>
     </div>
 </body>
 

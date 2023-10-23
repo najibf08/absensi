@@ -6,6 +6,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <style>
@@ -20,14 +24,14 @@
 }
 
 :root {
-    --white-color: red;
+    --white-color: #fff;
     --blue-color: #4070f4;
     --grey-color: #707070;
     --grey-color-light: #aaa;
 }
 
 body {
-    background-color: #e7f2fd;
+    background-color: orange;
     transition: all 0.5s ease;
 }
 
@@ -204,6 +208,23 @@ body.dark {
     white-space: nowrap;
 }
 
+.menu_items {
+    list-style: none;
+    padding: 0;
+}
+
+.nav_link {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--grey-color);
+}
+
+.nav_link:hover {
+    color: var(--blue-color);
+    background-color: var(--grey-color-light);
+}
+
 .sidebar.close .navlink {
     display: none;
 }
@@ -296,6 +317,15 @@ body.dark {
     display: none;
 }
 
+.sidebar li {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.sidebar ul {
+    margin-top: 10px;
+}
+
 @media screen and (max-width: 768px) {
     #sidebarOpen {
         font-size: 25px;
@@ -324,64 +354,66 @@ body.dark {
     <nav class="navbar">
         <div class="logo_item">
             <i class="bx bx-menu" id="sidebarOpen"></i>
-          selamat Datang Data Absen Karyawan
+            Admin
         </div>
 
-        <div class="search_bar">
-            <input type="text" placeholder="Search" />
-        </div>
 
         <div class="navbar_content">
             <i class="bi bi-grid"></i>
-            <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
-                alt="" class="profile" />
+            <a href="<?php echo base_url('admin/profil'); ?>">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
+                    alt="" class="profile" />
+            </a>
         </div>
     </nav>
 
     <!-- sidebar -->
     <nav class="sidebar">
-        <div class="menu_content">
-            <ul class="menu_items">
-                <div class="menu_title menu_dahsboard"></div>
-                <li class="item">
-                    <div href="#" class="nav_link submenu_item">
-                        <span class="navlink_icon">
-                            <i class="bx bx-home-alt"></i>
-                        </span>
-                        <span class="navlink">Home</span>
-                        <i class="bx bx-chevron-right arrow-left"></i>
-                    </div>
-
-                    <ul class="menu_items submenu">
-                        <a href="<?php echo base_url(
-                            'employee/dashboard'
-                        ); ?>" class="nav_link sublink">Dashboard</a>
-                    </ul>
-
-                    <ul class="menu_items submenu">
-                        <a href="<?php (
-                            'employee/absensi'
-                        ); ?>" class="nav_link sublink">Absensi</a>
-                    </ul>
-
-                    <ul class="menu_items submenu">
-                        <a href="<?php echo base_url(
-                            'employee/history'
-                        ); ?>" class="nav_link sublink">History</a>
-                    </ul>
-                </li>
-
-                <!-- Sidebar Open / Close -->
-                <div class="bottom_content">
-                    <div class="bottom expand_sidebar">
-                        <span> Expand</span>
-                        <i class='bx bx-log-in'></i>
-                    </div>
-                    <div class="bottom collapse_sidebar">
-                        <span> Log out</span>
-                        <i class='bx bx-log-out'></i>
-                    </div>
-                </div>
+        <ul class="menu_items">
+            <li class="">
+                <a href="<?php echo base_url(
+                    'admin/dashboard'
+                ); ?>" class="nav_link sublink"><i class="fa fa-tachometer"></i> Dashboard</a>
+            </li>
+            <li class="">
+                <a href="<?php echo base_url(
+                    'admin/history_absen'
+                ); ?>" class="nav_link sublink"><i class="fas fa-clock"></i> History Absen</a>
+            </li>
+            <li class="">
+                <a href="<?php echo base_url(
+                    'admin/daftar_karyawan'
+                ); ?>" class="nav_link sublink"><i class="fas fa-id-card"></i>
+                    Daftar Karyawan</a>
+            </li>
+            <li class="">
+                <a href="<?php echo base_url(
+                    'admin/rekap_minggu'
+                ); ?>" class="nav_link sublink"><i class="fas fa-calendar-week"></i> Rekap Mingguan
+                </a>
+            </li>
+            <li class="">
+                <a href="<?php echo base_url(
+                    'admin/rekap_bulanan'
+                ); ?>" class="nav_link sublink"><i class="fas fa-calendar-alt"></i> Rekap Bulanan
+                </a>
+            </li>
+            <li class="">
+                <a href="<?php echo base_url(
+                    'admin/rekap_harian'
+                ); ?>" class="nav_link sublink"><i class="fas fa-calendar-day"></i> Rekap Harian
+                </a>
+            </li>
+        </ul>
+        <div class="bottom_content">
+            <div class="bottom expand_sidebar">
+                <span> Expand</span>
+                <i class='bx bx-log-in'></i>
+            </div>
+            <div class="bottom collapse_sidebar">
+                <span> Tutup </span>
+                <i class='bx bx-log-out'></i>
+            </div>
         </div>
     </nav>
     <!-- JavaScript -->
