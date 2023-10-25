@@ -60,9 +60,8 @@ body {
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center">
-                            <img src="<?php echo base_url(
-                                './images/admin/' . $user->foto
-                            ); ?>" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                        <img src="<?php echo base_url('./images/admin/' . $user->foto); ?>" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+
                             <h5 class="my-3"><?php echo $user->username; ?></h5>
                             <p class="text-muted mb-4"><?php echo $user->nama_depan .
                                 ' ' .

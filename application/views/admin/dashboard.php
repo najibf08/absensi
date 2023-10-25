@@ -71,7 +71,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <div class="card-body">z
+                    <div class="card-body">
                         <i class="fas fa-envelope fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Karyawan</h6>
                         <h1><?php echo $karyawan; ?> </h1>

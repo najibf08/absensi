@@ -20,14 +20,14 @@
 }
 
 :root {
-    --white-color: #fff;
+    --white-color: black;
     --blue-color: #4070f4;
     --grey-color: #707070;
     --grey-color-light: #aaa;
 }
 
 body {
-    background-color: orange;
+    background-color: Beige;
     transition: all 0.5s ease;
 }
 

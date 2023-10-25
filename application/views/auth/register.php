@@ -21,7 +21,7 @@
 section {
     position: relative;
     min-height: 100vh;
-    background-color: #22ABC6;
+    background-color: Grey;
     display: flex;
     justify-content: center;
     align-items: center;
