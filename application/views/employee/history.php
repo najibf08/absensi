@@ -31,6 +31,7 @@
 
 <body>
     <?php $this->load->view('employee/index'); ?>
+
     <div class="table-responsive">
         <table class="table text-center table-hover">
             <thead>
@@ -51,7 +52,7 @@
                 <tr>
                     <td><span class="number"><?php echo $i; ?></span></td>
                     <td><?php echo $row->kegiatan; ?></td>
-                    <td><?php echo $row->date; ?></td>
+                    <td><?php echo convDate($row->date); ?></td>
                     <td><?php echo $row->jam_masuk; ?></td>
                     <td>
                         <?php echo $row->jam_pulang; ?>
@@ -79,7 +80,17 @@
 
 
                     <td>
-                        <?php if ($row->keterangan_izin == 'masuk'): ?>
+                        <?php
+                        // Mendapatkan waktu saat ini dalam format jam:menit (misalnya, "15:30")
+                        $waktu_sekarang = date('H:i');
+
+                        // Menentukan waktu batas (16:00)
+                        $waktu_batas = '16:00';
+
+                        if (
+                            $row->status !== 'true' &&
+                            $waktu_sekarang >= $waktu_batas
+                        ): ?>
                         <a href="<?php echo base_url('employee/update_absen/') .
                             $row->id; ?>" class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -89,7 +100,8 @@
                             $row->id; ?>" class="btn btn-warning">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <?php endif; ?>
+                        <?php endif;
+                        ?>
                         <!-- <?php if (!empty($row->keterangan_izin)): ?>
                         <a href="<?php echo base_url(
                             !empty($row->kegiatan)
@@ -99,8 +111,6 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a> |
                         <?php endif; ?> -->
-                        <button type="button" class="btn btn-danger" onclick="hapus(<?php echo $row->id; ?>)"><i
-                                class="fa-solid fa-trash"></i></button>
                     </td>
 
                 </tr>
@@ -109,30 +119,6 @@
             </tbody>
         </table>
     </div>
-
-    <!-- ... -->
-
-
-    <script>
-    function hapus(id) {
-        Swal.fire({
-            title: 'Yakin Di Hapus?',
-            text: "Anda tidak dapat mengembalikannya!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#198754',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "<?php echo base_url(
-                    'employee/hapus/'
-                ); ?>" + id;
-            }
-        });
-    }
-    </script>
 
 </body>
 

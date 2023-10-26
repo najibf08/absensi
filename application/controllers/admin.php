@@ -891,4 +891,27 @@ class Admin extends CI_Controller
         $data['rekap_harian'] = $this->admin_model->getRekapHarian($tanggal);
         $this->load->view('admin/rekap_harian', $data);
     }
+
+    public function hapusKaryawan($id)
+    {
+        // Hapus semua catatan terkait dari tabel 'absensi'
+        $this->db->where('id_karyawan', $id);
+        $this->db->delete('absensi');
+
+        // Hapus pengguna dari tabel 'user'
+        $this->db->where('id', $id);
+        $this->db->delete('user');
+
+        // Setelah penghapusan berhasil, Anda dapat mengirim respons sukses atau melakukan pengalihan ke halaman lain.
+        redirect('admin/daftar_karyawan'); // Contoh pengalihan ke halaman daftar karyawan
+    }
+    public function hapus($id)
+    {
+        $this->m_model->delete('absensi', 'id', $id);
+        $this->session->set_flashdata(
+            'berhasil_menghapus',
+            'Data berhasil dihapus.'
+        );
+        redirect(base_url('admin/history_absen'));
+    }
 }

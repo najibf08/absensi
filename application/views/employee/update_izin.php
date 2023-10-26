@@ -24,11 +24,12 @@
             'employee/aksi_update_izin'
         ) ?>" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo $absen->id; ?>">
-            <h3>Ubah</h3>
+            <h3>Ubah Keterangan</h3>
             <br>
             <!--  -->
             <label for="Kegiatan" class="form-label">Keterangan :</label>
-            <textarea class="form-control" aria-label="With textarea" name="keterangan_izin"></textarea>
+            <textarea class="form-control" aria-label="With textarea"
+                name="keterangan_izin"><?php echo $absen->keterangan_izin; ?></textarea>
             <button type="submit" class="btn btn-success mt-4">Ubah</button>
         </form>
         <?php endforeach; ?>

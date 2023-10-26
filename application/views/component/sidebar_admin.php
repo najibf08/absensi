@@ -386,23 +386,27 @@ body.dark {
                 ); ?>" class="nav_link sublink"><i class="fas fa-id-card"></i>
                     Daftar Karyawan</a>
             </li>
-            <li class="">
-                <a href="<?php echo base_url(
-                    'admin/rekap_minggu'
-                ); ?>" class="nav_link sublink"><i class="fas fa-calendar-week"></i> Rekap Mingguan
+            <li class="dropdown">
+                <a class="nav_link submenu_item">
+                    <i class="fas fa-list"></i> Rekap
                 </a>
-            </li>
-            <li class="">
-                <a href="<?php echo base_url(
-                    'admin/rekap_bulanan'
-                ); ?>" class="nav_link sublink"><i class="fas fa-calendar-alt"></i> Rekap Bulanan
-                </a>
-            </li>
-            <li class="">
-                <a href="<?php echo base_url(
-                    'admin/rekap_harian'
-                ); ?>" class="nav_link sublink"><i class="fas fa-calendar-day"></i> Rekap Harian
-                </a>
+                <ul class="submenu">
+                    <li>
+                        <a href="<?php echo base_url(
+                            'admin/rekap_harian'
+                        ); ?>" class="nav_link">Rekap Harian</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(
+                            'admin/rekap_minggu'
+                        ); ?>" class="nav_link"></i>Rekap Mingguan</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url(
+                            'admin/rekap_bulanan'
+                        ); ?>" class="nav_link">Rekap Bulanan</a>
+                    </li>
+                </ul>
             </li>
         </ul>
         <div class="bottom_content">

@@ -1,4 +1,8 @@
 <?php
+function convDate($date)
+{
+    return date('d F Y', strtotime($date));
+}
 function panggil_username($id)
 {
     $ci = &get_instance();
@@ -9,7 +13,7 @@ function panggil_username($id)
         return $stmt;
     }
 }
-function tampil_nama_karawan_byid($id)
+function nama_karyawan($id)
 {
     $ci = &get_instance();
     $ci->load->database();
@@ -19,10 +23,4 @@ function tampil_nama_karawan_byid($id)
         return $stmt;
     }
 }
-
-function convDate($date)
-{
-    return date('d F Y', strtotime($date));
-}
-
 ?>

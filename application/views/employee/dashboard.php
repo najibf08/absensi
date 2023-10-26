@@ -43,6 +43,10 @@
         /* Menghapus margin kiri */
     }
 
+    .table {
+        margin-left: 5%;
+    }
+
     .icon {
         float: none;
         /* Menghapus floating icon */
@@ -61,7 +65,9 @@
                     <div class="card-body">
                         <i class="fas fa-check fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Masuk</h6>
-                         <h1>10</h1> 
+                        <h1>
+                            <h1><?php echo $total_absen; ?></h1>
+                        </h1>
                     </div>
                 </div>
             </div>
@@ -70,7 +76,7 @@
                     <div class="card-body">
                         <i class="fas fa-envelope fa-4x icon float-end"></i>
                         <h6 class="card-title">Jumlah Izin</h6>
-                         <h1>2</h1>
+                        <h1><?php echo $total_izin; ?> </h1>
                     </div>
                 </div>
             </div>
@@ -79,12 +85,12 @@
                     <div class="card-body">
                         <i class="fa-solid fa-calculator fa-4x icon float-end"></i>
                         <h6 class="card-title">Total</h6>
-                        <h1>12</h1>
+                        <h1><?php echo $absensi_count; ?></h1>
                     </div>
                 </div>
             </div>
         </div>
-        <table class="table table-striped mt-5">
+        <table class="table table-striped mt-3">
             <thead>
                 <tr>
                     <th scope="col">No</th>
@@ -96,12 +102,12 @@
                 </tr>
             </thead>
             <tbody>
-            <?php $i = 1; ?>
+                <?php $i = 1; ?>
                 <?php foreach ($absensi as $row): ?>
                 <tr>
                     <td><span class="number"><?php echo $i; ?></span></td>
                     <td><?php echo $row->kegiatan; ?></td>
-                    <td><?php echo $row->date; ?></td>
+                    <td><?php echo ($row->date); ?></td>
                     <td><?php echo $row->jam_masuk; ?></td>
                     <td>
                         <span id="jam-pulang-<?php echo $i; ?>">
